@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Login } from './components/login';
 import { Dashboard } from './components/dashboard';
+import { Booking } from './components/currentBookings';
 import { 
   BrowserRouter as Router, 
   Route,
@@ -11,24 +12,22 @@ import {
   useLocation
 } from 'react-router-dom';
 
-export class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route exact path="/">
-              <Login/>
-            </Route>
-            <Route exact path='/dashboard'>
-              <Dashboard/>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
+export const App = () => {
+  // const [userId, setUserId] = useState('');
+  const [userInfo, setUserInfo] = useState({});
+  return (
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route exact path="/">
+            <Login setUserInfo={setUserInfo}/>
+          </Route>
+          <Route exact path='/dashboard'>
+            <Dashboard user={userInfo}/>
+            <Booking user={userInfo}/>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
 }

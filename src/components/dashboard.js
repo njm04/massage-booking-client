@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Logout } from '../components/logout';
 
-export class Dashboard extends Component {
-  render() {
-    return(
-      <nav className="navbar navbar-dark bg-primary">
-        <a className="navbar-brand" href="#">Navbar</a>
-        <Logout />
-      </nav>
-    )
-  }
+export const Dashboard = (props) => {
+  let firstName = props.user.firstName;
+  let lastName = props.user.lastName;
+  let id = props._id;
+  return(
+    <nav className="navbar navbar-dark bg-primary">
+      <a className="navbar-brand" href="#">Navbar</a>
+      <span><strong className="text-light">{firstName} {lastName} | </strong><Logout /></span>
+    </nav>
+  )
 }

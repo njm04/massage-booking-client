@@ -5,9 +5,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { setAuthorizationToken } from '../utils/setAuthorizationToken';
 import { auth } from '../utils/auth';
 
-export const Login = () => {
+export const Login = (props) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [error, setError] = useState(false);
+	const [errorMsg, setErrorMsg] = useState('');
 	let history = useHistory();
 	let location = useLocation();
 
@@ -21,6 +23,15 @@ export const Login = () => {
 		setPassword(e.target.value);
 	}
 
+	const decode = (token) => {
+		try {
+			const userInfo = jwt.decode(token);
+			props.setUserInfo(userInfo.user);
+		} catch(err) {
+			throw err;
+		}
+	}
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -30,17 +41,31 @@ export const Login = () => {
 		}
 
 		const result = await axios.post('http://localhost:5000/login', payload);
-		const token = result.data.token;
-		localStorage.setItem('jwtToken', token);
-		setAuthorizationToken(token);
-		auth.authenticate(() => {
-			history.replace(from);
-		});
+		if(result.data.status === 200) {
+			const token = result.data.token;
+			localStorage.setItem('jwtToken', token);
+			setAuthorizationToken(token);
+			decode(token);
+			auth.authenticate(() => {
+				history.replace(from);
+			});
+		} else {
+			setError(true);
+			setErrorMsg(result.data.message);
+		}
+
+
 	}
 
 	return (
 		<form className="form-signin">
 			<h1 className="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
+			{
+			error ? <div className="alert alert-danger" role="alert">
+						{errorMsg}
+					</div>
+					: ''
+			}
 			<label className="sr-only">Email address</label>
 			<input 
 				value={email} 
