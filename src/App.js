@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-import { Login } from './login';
-import { Dashboard } from './dashboard';
+import { Login } from './components/login';
+import { Dashboard } from './components/dashboard';
+import { 
+  BrowserRouter as Router, 
+  Route,
+  Switch,
+  Link,
+  Redirect,
+  useHistory,
+  useLocation
+} from 'react-router-dom';
 
 export class App extends Component {
   // constructor(props) {
@@ -11,10 +19,15 @@ export class App extends Component {
     return (
       <Router>
         <div className="App">
-        {/* <Login></Login> */}
-        <Route path="/" exact component={Login} />
-        <Route path='/dashboard' exact Component={Dashboard}/>
-      </div>
+          <Switch>
+            <Route exact path="/">
+              <Login/>
+            </Route>
+            <Route exact path='/dashboard'>
+              <Dashboard/>
+            </Route>
+          </Switch>
+        </div>
       </Router>
     );
   }
