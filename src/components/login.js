@@ -27,6 +27,8 @@ export const Login = (props) => {
 		try {
 			const userInfo = jwt.decode(token);
 			props.setUserInfo(userInfo.user);
+			console.log(userInfo.user)
+			localStorage.setItem('userId', userInfo.user._id);
 		} catch(err) {
 			throw err;
 		}
@@ -44,6 +46,7 @@ export const Login = (props) => {
 		if(result.data.status === 200) {
 			const token = result.data.token;
 			localStorage.setItem('jwtToken', token);
+			// localStorage.setItem('userId', props.userInfo._id);
 			setAuthorizationToken(token);
 			decode(token);
 			auth.authenticate(() => {

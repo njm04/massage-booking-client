@@ -25,6 +25,7 @@ export const App = () => {
           <Route exact path='/dashboard'>
             <Dashboard user={userInfo}/>
             <Booking user={userInfo}/>
+            {/* {localStorage.setItem('userId', userInfo._id)} */}
           </Route>
         </Switch>
       </div>

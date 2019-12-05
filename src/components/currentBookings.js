@@ -9,7 +9,8 @@ export const Booking = (props) => {
   }, []);
 
   const getBookings = async() => {
-    const res = await fetch(`http://localhost:5000/book/${userId}`, {
+    console.log(localStorage)
+    const res = await fetch(`http://localhost:5000/book/${localStorage.userId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
