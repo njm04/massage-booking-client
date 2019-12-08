@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Login } from './components/login';
 import { Dashboard } from './components/dashboard';
 import { DataTables } from './components/dataTables';
-import { Booking } from './components/currentBookings';
 import { PrivateRoute } from './components/privateRoute';
 import { 
   BrowserRouter as Router, 
