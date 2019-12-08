@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import { useHistory, useLocation, Redirect } from 'react-router-dom';
 import { setAuthorizationToken } from '../utils/setAuthorizationToken';
 import { authContext } from '../utils/auth';
+import { decode } from '../utils/jwtDecode';
 
 export const Login = (props) => {
 	const auth = useContext(authContext);
@@ -24,17 +24,6 @@ export const Login = (props) => {
 		setPassword(e.target.value);
 	}
 
-	const decode = (token) => {
-		try {
-			const userInfo = jwt.decode(token);
-			props.setUserInfo(userInfo.user);
-			console.log(userInfo.user)
-			localStorage.setItem('userId', userInfo.user._id);
-		} catch(err) {
-			throw err;
-		}
-	}
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -47,7 +36,6 @@ export const Login = (props) => {
 		if(result.data.status === 200) {
 			const token = result.data.token;
 			localStorage.setItem('jwtToken', token);
-			// localStorage.setItem('userId', props.userInfo._id);
 			setAuthorizationToken(token);
 			decode(token);
 			auth.authenticate(() => {
