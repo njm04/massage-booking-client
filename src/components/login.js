@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Redirect } from 'react-router-dom';
 import { setAuthorizationToken } from '../utils/setAuthorizationToken';
-import { auth } from '../utils/auth';
+import { authContext } from '../utils/auth';
 
 export const Login = (props) => {
+	const auth = useContext(authContext);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState('');
 	let history = useHistory();
 	let location = useLocation();
-
+	
 	let { from } = location.state || { from: { pathname: "/dashboard" } };
 
 	const onChangeEmail = (e) => {
@@ -59,6 +60,8 @@ export const Login = (props) => {
 
 
 	}
+
+	if(auth.authenticated()) return <Redirect to='/dashboard' />;
 
 	return (
 		<form className="form-signin">

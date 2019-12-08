@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { auth } from '../utils/auth';
+import { authContext } from '../utils/auth';
 
 export const Logout = () => {
+    const auth = useContext(authContext);
     let history = useHistory();
 
     const handleLogout = () => {
+        localStorage.clear();
         auth.signOut(() => history.push('/'));
     }
 

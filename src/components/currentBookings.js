@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 export const Booking = (props) => {
   const [bookings, setBookings] = useState([]);
-  const userId = props.user._id;
   const token = localStorage.jwtToken;
-
+  // console.log(useHistory())
   useEffect(() => {
     getBookings();
   }, []);
 
   const getBookings = async() => {
-    console.log(localStorage)
+    
     const res = await fetch(`http://localhost:5000/book/${localStorage.userId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(res)
+    
     const bookingData = await res.json();
     setBookings(bookingData);
   }
-  console.log(bookings)
+  
   return (
-  <table className="table">
+  <table className="table mt-2">
     {/* {bookings.firstName} */}
     <thead className="thead-dark">
       <tr>
@@ -32,7 +32,7 @@ export const Booking = (props) => {
         {/* <th scope="col">Massage Therapist</th> */}
         <th scope="col">Duration</th>
         <th scope="col">Date</th>
-        <th scope="col">Action</th>
+        <th scope="col">Action <button type="button" className="btn btn-primary">Book</button></th>
       </tr>
     </thead>
     <tbody>

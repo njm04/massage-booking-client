@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Login } from './components/login';
 import { Dashboard } from './components/dashboard';
+import { DataTables } from './components/dataTables';
 import { Booking } from './components/currentBookings';
+import { PrivateRoute } from './components/privateRoute';
 import { 
   BrowserRouter as Router, 
   Route,
@@ -13,8 +15,8 @@ import {
 } from 'react-router-dom';
 
 export const App = () => {
-  // const [userId, setUserId] = useState('');
   const [userInfo, setUserInfo] = useState({});
+  console.log(userInfo)
   return (
     <Router>
       <div className="App">
@@ -22,11 +24,10 @@ export const App = () => {
           <Route exact path="/">
             <Login setUserInfo={setUserInfo}/>
           </Route>
-          <Route exact path='/dashboard'>
+          <PrivateRoute exact path='/dashboard'>
             <Dashboard user={userInfo}/>
-            <Booking user={userInfo}/>
-            {/* {localStorage.setItem('userId', userInfo._id)} */}
-          </Route>
+            <DataTables user={userInfo}/>
+          </PrivateRoute>
         </Switch>
       </div>
     </Router>
