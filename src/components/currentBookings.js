@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 export const Booking = (props) => {
   const [bookings, setBookings] = useState([]);
   const token = localStorage.jwtToken;
-  // console.log(useHistory())
+
   useEffect(() => {
     getBookings();
   }, []);
@@ -23,7 +23,6 @@ export const Booking = (props) => {
   
   return (
   <table className="table mt-2">
-    {/* {bookings.firstName} */}
     <thead className="thead-dark">
       <tr>
         <th scope="row">#</th>
