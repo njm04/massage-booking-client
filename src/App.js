@@ -15,7 +15,6 @@ import {
 
 export const App = () => {
   const [userInfo, setUserInfo] = useState({});
-  console.log(userInfo)
   return (
     <Router>
       <div className="App">
