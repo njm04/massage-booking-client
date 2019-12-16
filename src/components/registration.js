@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
+import { authContext } from '../utils/auth';
 
 export const Registration = () => {
+  const auth = useContext(authContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -63,6 +65,8 @@ export const Registration = () => {
       setErrorMsg(result.data.message);
     }
   }
+
+  if(auth.authenticated()) return <Redirect to='/dashboard' />;
 
   return (
     <form className="form-signin">
