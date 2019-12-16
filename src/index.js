@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './signin.css';
+import './styles.css';
 import { App } from './App';
 import * as serviceWorker from './serviceWorker';
 import { setAuthorizationToken } from './utils/setAuthorizationToken';
