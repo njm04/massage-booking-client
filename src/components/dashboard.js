@@ -17,7 +17,7 @@ export const Dashboard = (props) => {
 
   return(
     <nav className="navbar navbar-dark bg-primary">
-      <a className="navbar-brand" href="#">Navbar</a>
+      <a className="navbar-brand" href="#">Massage Booking</a>
       <span><strong className="text-light">{firstName} {lastName} | </strong><Logout /></span>
     </nav>
   )

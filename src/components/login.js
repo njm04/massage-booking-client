@@ -80,13 +80,8 @@ export const Login = (props) => {
 				placeholder="Password" 
 				required
 			/>
-			{/* <div class="checkbox mb-3">
-				<label>
-				<input type="checkbox" value="remember-me"/> Remember me
-				</label>
-			</div> */}
 			<button className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}>Sign in</button>
-			<button className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+			<button className="btn btn-lg btn-primary btn-block" type="button" onClick={() => history.replace('/register')}>Register</button>
 		</form>
 	);
 }

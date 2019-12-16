@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { EditBookingForm } from './editBookingForm';
 import axios from 'axios';
-import { AddBookingForm } from './addBookingForm';
+import 'react-datepicker/dist/react-datepicker.css';
 
-export const AddBooking = () => {
+export const EditBooking = (props) => {
   const [massageType, setMassageType] = useState('Full Body Massage');
   const [duration, setDuration] = useState(0);
   const [contactNumber, setContactNumber] = useState('');
@@ -11,15 +12,8 @@ export const AddBooking = () => {
   const [zipCode, setZipCode] = useState('');
   const [date, setDate] = useState(new Date());
   const [success, setSuccess] = useState(false);
-  // console.log({
-  //   massageType,
-  //   duration,
-  //   contactNumber,
-  //   address,
-  //   city,
-  //   zipCode,
-  //   date,
-  // })
+  const bookingId = props.viewData._id;
+  const { viewData } = props;
 
   const fields = {
     massageType,
@@ -51,15 +45,15 @@ export const AddBooking = () => {
       date,
     }
 
-    const result = await axios.post('http://localhost:5000/book', payload);
+    const result = await axios.put(`http://localhost:5000/book/${bookingId}`, payload);
     if(result.data.status === 200) {
-      setMassageType('');
-      setDuration(0);
-      setContactNumber('');
-      setAddress('');
-      setCity('');
-      setZipCode('');
-      setDate(new Date());
+      setMassageType(viewData.massageType);
+      setDuration(viewData.duration);
+      setContactNumber(viewData.contactNumber);
+      setAddress(viewData.address);
+      setCity(viewData.city);
+      setZipCode(viewData.zip);
+      setDate(viewData.date);
       window.location.reload(false);
     } else {
       console.log(result.data.message);
@@ -67,30 +61,31 @@ export const AddBooking = () => {
   }
 
   return (
-    <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div className="modal fade" id="editModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalCenterTitle">Book</h5>
+            <h5 className="modal-title" id="exampleModalCenterTitle">Update</h5>
             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div className="modal-body">
             {
-              success ? 
-              <div className="alert alert-success" role="alert">
-                A simple success alert—check it out!
-              </div> : ''
+              success ?
+                <div className="alert alert-success" role="alert">
+                  A simple success alert—check it out!
+            </div> : ''
             }
-            <AddBookingForm fields={{...fields}}/>
-        </div>
+            <EditBookingForm fields={{ ...fields }} fieldData={props.viewData}/>
+          </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary" onClick={handleSubmit} data-dismiss="modal">Book</button>
+            <button type="button" className="btn btn-primary" onClick={handleSubmit} data-dismiss="modal">Update</button>
           </div>
         </div>
       </div>
     </div>
   )
+
 }
